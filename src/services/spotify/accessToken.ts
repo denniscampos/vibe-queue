@@ -14,6 +14,9 @@ export async function getAccessToken() {
   const grantType = 'authorization_code';
   const code = new URL(currentUrl).searchParams.get('code');
 
+  console.log('current: ', currentUrl);
+  console.log('code: ', code);
+
   const params = new URLSearchParams();
   params.append('code', String(code));
   params.append('redirect_uri', redirectUrl);
