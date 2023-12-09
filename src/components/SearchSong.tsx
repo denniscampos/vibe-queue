@@ -6,8 +6,10 @@ export function SearchSong() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const encodedSongName = encodeURIComponent(songName);
+
   const url = new URL(
-    `/v1/search?type=track&limit=1&q=${songName}`,
+    `/v1/search?type=track&limit=1&q=${encodedSongName}`,
     import.meta.env.VITE_SPOTIFY_API_URL,
   ).href;
 
