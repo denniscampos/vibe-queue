@@ -1,5 +1,12 @@
 import { Buffer } from 'buffer';
 
+export const SPOTIFY_CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+export const SPOTIFY_CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+
+if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
+  throw new Error('Missing Spotify Client ID or Client Secret');
+}
+
 export async function getAccessToken() {
   const url = 'https://accounts.spotify.com/api/token';
   const currentUrl = window.location.href;
@@ -20,11 +27,9 @@ export async function getAccessToken() {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization:
         'Basic ' +
-        Buffer.from(
-          import.meta.env.VITE_SPOTIFY_CLIENT_ID +
-            ':' +
-            import.meta.env.VITE_SPOTIFY_CLIENT_SECRET,
-        ).toString('base64'),
+        Buffer.from(SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET).toString(
+          'base64',
+        ),
     },
     body: params,
   });
