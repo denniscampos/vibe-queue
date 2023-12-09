@@ -10,11 +10,9 @@ if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
 export async function getAccessToken() {
   const url = 'https://accounts.spotify.com/api/token';
   const currentUrl = window.location.href;
-  const urlParams = new URLSearchParams(new URL(currentUrl).search);
   const redirectUrl = `${import.meta.env.VITE_BASE_URL}/callback`;
   const grantType = 'authorization_code';
-
-  const code = urlParams.get('code');
+  const code = new URL(currentUrl).searchParams.get('code');
 
   const params = new URLSearchParams();
   params.append('code', String(code));

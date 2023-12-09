@@ -6,10 +6,8 @@ export function Home() {
   const [loading, setIsLoading] = useState(false);
 
   const currentUrl = window.location.href;
-  const urlParams = new URLSearchParams(new URL(currentUrl).search);
   const accessToken = localStorage.getItem('access_token');
-
-  const code = urlParams.get('code');
+  const code = new URL(currentUrl).searchParams.get('code');
 
   useEffect(() => {
     if (!code) return;
