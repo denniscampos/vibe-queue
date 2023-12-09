@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAccessToken } from '../services/spotify/accessToken';
-// import { SearchSong } from './SearchSong';
+import { SearchSong } from './SearchSong';
 
 export function Home() {
   const [loading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ export function Home() {
   return (
     <div>
       <h2>Home</h2>
-      {/* {accessToken !== null ? <SearchSong /> : null} */}
+      {accessToken !== null ? <SearchSong /> : null}
 
       <canvas id="canvas" width="1920" height="1080"></canvas>
     </div>
