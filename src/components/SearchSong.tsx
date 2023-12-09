@@ -13,8 +13,6 @@ export function SearchSong() {
     import.meta.env.VITE_SPOTIFY_API_URL,
   ).href;
 
-  console.log({ url });
-
   const retrieveAccessToken = localStorage.getItem('access_token');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
