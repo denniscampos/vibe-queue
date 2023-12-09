@@ -1,3 +1,5 @@
+import { generateRandomString } from '../utils';
+
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const spotifyClientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 
@@ -14,15 +16,14 @@ export function Login() {
     'playlist-modify-private',
   ];
 
-  // TODO: Generate a random string for the state parameter
-  const state = '34fFs29kd09';
+  const state = generateRandomString(16);
 
   const loginUrl = `${url}response_type=code&client_id=${spotifyClientId}&scope=${scopes}&redirect_uri=${redirect_uri}&state=${state}`;
 
   return (
     <div>
-      <a className="text-green-500" href={loginUrl}>
-        Login
+      <a className="text-white bg-green-500 p-2 rounded-sm" href={loginUrl}>
+        Login to Spotify
       </a>
     </div>
   );
