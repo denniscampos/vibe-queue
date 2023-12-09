@@ -1,4 +1,4 @@
-export function generateRandomString(length: number) {
+export function generateRandomString(length: number): string {
   let text = '';
   const possible =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
