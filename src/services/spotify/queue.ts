@@ -4,10 +4,12 @@ export async function addTrackToQueue(uri: string) {
     import.meta.env.VITE_SPOTIFY_API_URL,
   ).href;
 
+  const retrieveAccessToken = localStorage.getItem('access_token');
+
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      Authorization: 'Bearer ' + import.meta.env.SPOTIFY_ACCESS_TOKEN,
+      Authorization: 'Bearer ' + retrieveAccessToken,
     },
   });
 

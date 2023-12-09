@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { addTrackToQueue } from '../services/spotify/queue';
-import { getAccessToken } from '../services/spotify/accessToken';
 
 const SPOTIFY_API_URL = import.meta.env.VITE_SPOTIFY_API_URL;
 
@@ -14,6 +13,8 @@ export function SearchSong() {
     SPOTIFY_API_URL,
   ).href;
 
+  const retrieveAccessToken = localStorage.getItem('access_token');
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
@@ -22,7 +23,7 @@ export function SearchSong() {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer ' + import.meta.env.SPOTIFY_ACCESS_TOKEN,
+          Authorization: 'Bearer ' + retrieveAccessToken,
         },
       });
 
@@ -41,18 +42,10 @@ export function SearchSong() {
       addTrackToQueue(data.tracks.items[0].uri);
       setIsLoading(false);
     } catch (e) {
-      // if (e instanceof Error) {
-      //   setErrorMessage(e?.message);
-      // }
-
       console.error(e);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const getToken = async () => {
-    await getAccessToken();
   };
 
   return (
@@ -71,9 +64,6 @@ export function SearchSong() {
         </button>
       </form>
       <span className="text-red-500">{errorMessage}</span>
-      <button type="button" onClick={getToken}>
-        Generate Token
-      </button>
       <p className="text-green-500">song name: {songName}</p>
     </>
   );
