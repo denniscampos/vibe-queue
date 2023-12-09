@@ -10,12 +10,9 @@ export function Home() {
   const code = new URL(currentUrl).searchParams.get('code');
 
   useEffect(() => {
-    if (!code) return;
+    const shouldFetchToken = code && !accessToken;
 
-    if (
-      (accessToken === 'undefined' && code) ||
-      (accessToken === null && code)
-    ) {
+    if (shouldFetchToken) {
       setIsLoading(true);
       const generateAccessToken = async () => {
         await getAccessToken();
