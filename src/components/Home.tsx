@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAccessToken } from '../services/spotify/accessToken';
+import { generateAccessToken } from '../services/spotify/accessToken';
 import { SearchSong } from './SearchSong';
 
 export function Home() {
@@ -14,12 +14,12 @@ export function Home() {
 
     if (shouldFetchToken) {
       setIsLoading(true);
-      const generateAccessToken = async () => {
-        await getAccessToken();
+      const createAccessToken = async () => {
+        await generateAccessToken();
         setIsLoading(false);
       };
 
-      generateAccessToken();
+      createAccessToken();
     }
   }, [accessToken, code]);
 

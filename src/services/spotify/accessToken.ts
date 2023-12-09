@@ -7,7 +7,15 @@ if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
   throw new Error('Missing Spotify Client ID or Client Secret');
 }
 
-export async function getAccessToken() {
+let fetchingToken = false;
+
+export async function generateAccessToken(): Promise<string | null> {
+  if (fetchingToken) {
+    // To prevent multiple requests.
+    return null;
+  }
+
+  fetchingToken = true;
   const url = 'https://accounts.spotify.com/api/token';
   const currentUrl = window.location.href;
   const redirectUrl = `${import.meta.env.VITE_BASE_URL}/callback`;
@@ -39,6 +47,8 @@ export async function getAccessToken() {
   if (!accessToken) {
     localStorage.setItem('access_token', data.access_token);
   }
+
+  fetchingToken = false;
 
   return accessToken;
 }
