@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { addTrackToQueue } from '../services/spotify/queue';
 
-const SPOTIFY_API_URL = import.meta.env.VITE_SPOTIFY_API_URL;
-
 export function SearchSong() {
   const [songName, setSongName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -10,8 +8,10 @@ export function SearchSong() {
 
   const url = new URL(
     `/v1/search?type=track&limit=1&q=${songName}`,
-    SPOTIFY_API_URL,
+    import.meta.env.VITE_SPOTIFY_API_URL,
   ).href;
+
+  console.log({ url });
 
   const retrieveAccessToken = localStorage.getItem('access_token');
 
