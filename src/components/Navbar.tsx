@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
 export function Navbar() {
+  const accessToken = localStorage.getItem('access_token');
+
   return (
     <header className="flex flex-row items-center justify-between p-4">
       <Link to="/">
@@ -8,9 +10,11 @@ export function Navbar() {
       </Link>
       <nav>
         <ul className="flex flex-row justify-between gap-4">
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          {!accessToken ? (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          ) : null}
           <li>
             <Link to="/source">Source</Link>
           </li>
