@@ -1,44 +1,24 @@
-import { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+
 import { Login } from './components/Login';
-import { getAccessToken } from './services/spotify/accessToken';
-import { SearchSong } from './components/SearchSong';
+import { Layout } from './components/Layout';
+import { Home } from './components/Home';
+import { Source } from './components/Source';
+import { NoMatch } from './components/NoMatch';
 
 function App() {
-  const [loading, setIsLoading] = useState(false);
-
-  const currentUrl = window.location.href;
-  const urlParams = new URLSearchParams(new URL(currentUrl).search);
-  const accessToken = localStorage.getItem('access_token');
-
-  const code = urlParams.get('code');
-
-  useEffect(() => {
-    if (!code) return;
-
-    if (
-      (accessToken === 'undefined' && code) ||
-      (accessToken === null && code)
-    ) {
-      setIsLoading(true);
-      const generateAccessToken = async () => {
-        await getAccessToken();
-        setIsLoading(false);
-      };
-
-      generateAccessToken();
-    }
-  }, [accessToken, code]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      <Login />
-      {accessToken !== null ? <SearchSong /> : null}
+    <div className="flex flex-col">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="source" element={<Source />} />
+          <Route path="/callback" element={<Home />} />
 
-      <canvas id="canvas" width="1920" height="1080"></canvas>
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
