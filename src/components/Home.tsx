@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { generateAccessToken } from '../services/spotify/accessToken';
+import { generateAccessToken } from '../services/spotify/token';
 import { SearchSong } from './SearchSong';
 import { Flex, Heading } from '@radix-ui/themes';
 

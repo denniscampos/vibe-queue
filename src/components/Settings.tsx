@@ -9,6 +9,7 @@ import {
 } from '@radix-ui/themes';
 import { EyeOpenIcon, EyeClosedIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
+import { getRefreshToken } from '../services/spotify/token';
 
 export function Settings() {
   const [showEye, setShowEye] = useState(false);
@@ -36,7 +37,7 @@ export function Settings() {
             <TextField.Input
               id="currentToken"
               placeholder="Token.."
-              value={accessToken as string}
+              value={String(accessToken)}
               type={showEye ? 'text' : 'password'}
               readOnly
             />
@@ -54,7 +55,9 @@ export function Settings() {
               )}
             </TextField.Slot>
           </TextField.Root>
-          <Button>Refresh Token</Button>
+          <Button type="button" onClick={async () => await getRefreshToken()}>
+            Refresh Token
+          </Button>
         </Flex>
       </Card>
     </Flex>
