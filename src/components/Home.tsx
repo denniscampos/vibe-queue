@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { generateAccessToken } from '../services/spotify/accessToken';
 import { SearchSong } from './SearchSong';
+import { Flex, Heading } from '@radix-ui/themes';
 
 export function Home() {
   const [loading, setIsLoading] = useState(false);
@@ -27,11 +28,9 @@ export function Home() {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-      <h2>Home</h2>
+    <Flex direction="column">
+      <Heading as="h2">Home</Heading>
       {accessToken !== null ? <SearchSong /> : null}
-
-      <canvas id="canvas" width="1920" height="1080"></canvas>
-    </div>
+    </Flex>
   );
 }
