@@ -12,12 +12,20 @@ import { useState } from 'react';
 import { getRefreshToken } from '../services/spotify/token';
 
 export function Settings() {
+  const [isLoading, setIsLoading] = useState(false);
   const [showEye, setShowEye] = useState(false);
 
   const accessToken = localStorage.getItem('access_token');
 
   const handleShowEye = () => {
     setShowEye(!showEye);
+  };
+
+  // TODO: Find a way to prevent refreshing tokens back to back, use the `expire_in` from the payload.
+  const handleRefreshToken = async () => {
+    setIsLoading(true);
+    await getRefreshToken();
+    setIsLoading(false);
   };
 
   return (
@@ -55,8 +63,12 @@ export function Settings() {
               )}
             </TextField.Slot>
           </TextField.Root>
-          <Button type="button" onClick={async () => await getRefreshToken()}>
-            Refresh Token
+          <Button
+            disabled={isLoading}
+            type="button"
+            onClick={handleRefreshToken}
+          >
+            {isLoading ? 'Loading..' : 'Refresh Token'}
           </Button>
         </Flex>
       </Card>
