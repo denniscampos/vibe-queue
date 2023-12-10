@@ -4,6 +4,7 @@ import { Login } from './components/Login';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { Source } from './components/Source';
+import { Settings } from './components/Settings';
 import { NoMatch } from './components/NoMatch';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="source" element={<Source />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="/callback" element={<Home />} />
 
           <Route path="*" element={<NoMatch />} />

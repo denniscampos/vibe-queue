@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { addTrackToQueue } from '../services/spotify/queue';
+import { TextField, Button, Text } from '@radix-ui/themes';
 
 export function SearchSong() {
   const [songName, setSongName] = useState('');
@@ -51,20 +52,19 @@ export function SearchSong() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <input
-          className="p-2"
+        <TextField.Input
+          mb="2"
           placeholder="Search song..."
           onChange={(e) => setSongName(e.target.value)}
         />
-        <button
-          disabled={isLoading}
-          className="p-2 rounded-sm bg-green-600 text-white"
-        >
+        <Button disabled={isLoading}>
           {isLoading ? 'Loading...' : 'Search'}
-        </button>
+        </Button>
       </form>
-      <span className="text-red-500">{errorMessage}</span>
-      <p className="text-green-500">song name: {songName}</p>
+      <Text as="p" color="red">
+        {errorMessage}
+      </Text>
+      <Text as="p">song name: {songName}</Text>
     </>
   );
 }

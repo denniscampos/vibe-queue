@@ -1,7 +1,10 @@
+import { Flex } from '@radix-ui/themes';
+
 export function Source() {
   return (
-    <div>
-      <h2>Source</h2>
-    </div>
+    <Flex direction="column" gap="2">
+      {/* <Text>Hello from Radix Themes :)</Text>
+      <Button>Let's go</Button> */}
+    </Flex>
   );
 }
