@@ -1,7 +1,7 @@
-import { getAccessToken } from '../services/spotify/accessToken';
+import { generateAccessToken } from '../services/spotify/accessToken';
 
 export function Token() {
-  const handleAccessToken = async () => await getAccessToken();
+  const handleAccessToken = async () => await generateAccessToken();
 
   return (
     <button className="text-green-500" onClick={handleAccessToken}>
