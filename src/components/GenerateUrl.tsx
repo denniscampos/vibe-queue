@@ -1,27 +1,26 @@
 import { Button, Text, TextField } from '@radix-ui/themes';
-import { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
+import { useContext } from 'react';
+
 import { CopyIcon } from '@radix-ui/react-icons';
 import toast, { Toaster } from 'react-hot-toast';
+import { GeneratedIdContext } from '../App';
+
+type GeneratedContextType = {
+  generatedId: string;
+};
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export function GenerateUrl() {
-  const [userUrl, setUserUrl] = useState('');
+  const { generatedId } = useContext(
+    GeneratedIdContext,
+  ) as GeneratedContextType;
 
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-  useEffect(() => {
-    const generated_id = localStorage.getItem('generated_id');
-
-    if (!generated_id) {
-      localStorage.setItem('generated_id', nanoid());
-    } else {
-      setUserUrl(`${BASE_URL}/source/?id=${generated_id}`);
-    }
-  }, [BASE_URL]);
+  const sourceUrl = `${BASE_URL}/source/?=${generatedId}`;
 
   const copyUserUrl = async () => {
     navigator.clipboard
-      .writeText(userUrl)
+      .writeText(sourceUrl)
       .then(() => {
         toast.success('URL copied');
       })
@@ -38,9 +37,9 @@ export function GenerateUrl() {
       </Text>
 
       <TextField.Root>
-        <TextField.Input id="sourceUrl" type="text" defaultValue={userUrl} />
+        <TextField.Input id="sourceUrl" type="text" defaultValue={sourceUrl} />
         <TextField.Slot pr="0">
-          <Button disabled={userUrl === ''} type="button" onClick={copyUserUrl}>
+          <Button type="button" onClick={copyUserUrl}>
             <CopyIcon height="16" width="16" /> Copy
           </Button>
         </TextField.Slot>
