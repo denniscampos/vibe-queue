@@ -1,11 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
+import { VibeContextProvider } from './Context';
 
 export function Layout() {
   return (
-    <div>
-      <Navbar />
-      <Outlet />
-    </div>
+    <VibeContextProvider>
+      <div>
+        <Navbar />
+        <Outlet />
+      </div>
+    </VibeContextProvider>
   );
 }

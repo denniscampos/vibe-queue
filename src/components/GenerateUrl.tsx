@@ -1,20 +1,13 @@
 import { Button, Text, TextField } from '@radix-ui/themes';
-import { useContext } from 'react';
 
 import { CopyIcon } from '@radix-ui/react-icons';
 import toast, { Toaster } from 'react-hot-toast';
-import { GeneratedIdContext } from '../App';
-
-type GeneratedContextType = {
-  generatedId: string;
-};
+import { useVibeContext } from '../hooks/useVibeContext';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export function GenerateUrl() {
-  const { generatedId } = useContext(
-    GeneratedIdContext,
-  ) as GeneratedContextType;
+  const { generatedId } = useVibeContext();
 
   const sourceUrl = `${BASE_URL}/source/?=${generatedId}`;
 
