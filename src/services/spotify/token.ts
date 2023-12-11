@@ -1,4 +1,5 @@
 import { Buffer } from 'buffer';
+import { userProfile } from './profile';
 
 export const SPOTIFY_CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 export const SPOTIFY_CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
@@ -49,6 +50,7 @@ export async function generateAccessToken(): Promise<SpotifyAccessTokenResponse 
   });
 
   const data = (await response.json()) as SpotifyAccessTokenResponse;
+  await userProfile(data.access_token);
 
   const expiresInMilliseconds = data.expires_in * 1000;
   const expiryTime = Date.now() + expiresInMilliseconds;
