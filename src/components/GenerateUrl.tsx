@@ -38,11 +38,7 @@ export function GenerateUrl() {
       </Text>
 
       <TextField.Root>
-        <TextField.Input
-          id="sourceUrl"
-          type="text"
-          defaultValue={userUrl ?? ''}
-        />
+        <TextField.Input id="sourceUrl" type="text" defaultValue={userUrl} />
         <TextField.Slot pr="0">
           <Button disabled={userUrl === ''} type="button" onClick={copyUserUrl}>
             <CopyIcon height="16" width="16" /> Copy
