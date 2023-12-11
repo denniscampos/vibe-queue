@@ -9,7 +9,10 @@ import {
 } from '@radix-ui/themes';
 import { EyeOpenIcon, EyeClosedIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
-import { getRefreshToken } from '../services/spotify/token';
+import { checkTokenValidity } from '../services/spotify/token';
+import toast from 'react-hot-toast';
+
+import { GenerateUrl } from './GenerateUrl';
 
 export function Settings() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,10 +24,16 @@ export function Settings() {
     setShowEye(!showEye);
   };
 
-  // TODO: Find a way to prevent refreshing tokens back to back, use the `expire_in` from the payload.
   const handleRefreshToken = async () => {
     setIsLoading(true);
-    await getRefreshToken();
+    const checkExpiredToken = await checkTokenValidity();
+
+    if (!checkExpiredToken) {
+      toast.error('Token is valid, no need to refresh');
+    } else {
+      toast.success('Token refreshed');
+    }
+
     setIsLoading(false);
   };
 
@@ -33,11 +42,14 @@ export function Settings() {
       <Card size="3" style={{ width: 500 }}>
         <Flex gap="3" direction="column">
           <Box mb="5">
-            <Heading as="h2">Manage Your Token</Heading>
+            <Heading as="h2">Settings</Heading>
             <Text as="p" color="gray">
-              Here you can refresh your token or access your existing token.
+              Manage your URL and token.
             </Text>
           </Box>
+
+          <GenerateUrl />
+
           <Text htmlFor="currentToken" as="label" size="2" weight="bold">
             Current Token
           </Text>

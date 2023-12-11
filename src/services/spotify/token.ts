@@ -50,8 +50,13 @@ export async function generateAccessToken(): Promise<SpotifyAccessTokenResponse 
 
   const data = (await response.json()) as SpotifyAccessTokenResponse;
 
+  const expiresInMilliseconds = data.expires_in * 1000;
+  const expiryTime = Date.now() + expiresInMilliseconds;
+
   const accessToken = localStorage.getItem('access_token');
+
   localStorage.setItem('refresh_token', data.refresh_token);
+  localStorage.setItem('token_expiry_time', expiryTime.toString());
 
   if (!accessToken) {
     localStorage.setItem('access_token', data.access_token);
@@ -91,11 +96,38 @@ export async function getRefreshToken(): Promise<void> {
     },
     body: params,
   });
+
   const response = (await body.json()) as SpotifyRefreshTokenResponse;
 
+  const expiresInMilliseconds = response.expires_in * 1000;
+  const expiryTime = Date.now() + expiresInMilliseconds;
+
+  localStorage.setItem('token_expiry_time', expiryTime.toString());
   localStorage.setItem('access_token', response.access_token);
   // I think we can use the same refresh token
   //https://community.spotify.com/t5/Spotify-for-Developers/Refreshing-access-token-does-not-reuturn-new-refresh-token/m-p/5431308#M6402
 
   // localStorage.setItem('refresh_token', response.refresh_token);
+}
+
+export async function checkTokenValidity(): Promise<boolean> {
+  const expiryTime = parseInt(
+    localStorage.getItem('token_expiry_time') || '0',
+    10,
+  );
+
+  const currentTime = Date.now();
+
+  console.log('expiryTime: ', currentTime >= expiryTime);
+
+  if (currentTime >= expiryTime) {
+    try {
+      await getRefreshToken();
+      return true;
+    } catch (e) {
+      console.error('Error refreshing token: ', e);
+    }
+  }
+
+  return false;
 }
