@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { generateAccessToken } from '../services/spotify/token';
 import { SearchSong } from './SearchSong';
 import { Flex, Heading } from '@radix-ui/themes';
+import { useSearchParams } from 'react-router-dom';
 
 export function Home() {
   const [loading, setIsLoading] = useState(false);
+  const [searchParams] = useSearchParams();
 
-  const currentUrl = window.location.href;
   const accessToken = localStorage.getItem('access_token');
-  const code = new URL(currentUrl).searchParams.get('code');
+  const code = searchParams.get('code');
 
   useEffect(() => {
     const shouldFetchToken = code && !accessToken;

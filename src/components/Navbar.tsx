@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Flex } from '@radix-ui/themes';
 import { Link as RadixLink } from '@radix-ui/themes';
-import { useVibeContext } from '../hooks/useVibeContext';
 
 export function Navbar() {
-  const { isLoggedIn } = useVibeContext();
   const accessToken = localStorage.getItem('access_token');
 
   return (
@@ -17,19 +15,19 @@ export function Navbar() {
         </RadixLink>
         <Flex gap="5" asChild>
           <nav>
-            {!accessToken && !isLoggedIn ? (
+            {!accessToken ? (
               <RadixLink asChild>
                 <Link to="/login">Login</Link>
               </RadixLink>
             ) : null}
             <RadixLink asChild>
-              <Link to="/source">Source</Link>
+              <Link to="/source" reloadDocument>
+                Source
+              </Link>
             </RadixLink>
-            {isLoggedIn && (
-              <RadixLink asChild>
-                <Link to="/settings">Settings</Link>
-              </RadixLink>
-            )}
+            <RadixLink asChild>
+              <Link to="/settings">Settings</Link>
+            </RadixLink>
           </nav>
         </Flex>
       </header>

@@ -21,7 +21,7 @@ export function Login() {
   ];
   const state = generateRandomString(16);
 
-  const loginUrl = `${url}response_type=code&client_id=${spotifyClientId}&scope=${scopes}&redirect_uri=${redirect_uri}&state=${state}&show_dialog=true`;
+  const loginUrl = `${url}response_type=code&client_id=${spotifyClientId}&scope=${scopes}&redirect_uri=${redirect_uri}&state=${state}`;
 
   return (
     <div>
@@ -30,6 +30,9 @@ export function Login() {
           Login
         </Link>
       </Button>
+      <Link to="/" reloadDocument>
+        Go home
+      </Link>
     </div>
   );
 }
