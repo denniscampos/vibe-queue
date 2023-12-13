@@ -1,18 +1,12 @@
 import { nanoid } from 'nanoid';
 import { createContext, useEffect, useState } from 'react';
+import { VibeContextType } from '../types';
 
 const defaults: VibeContextType = {
   isLoggedIn: false,
   setLoggedIn: () => {},
   generatedId: nanoid(),
   setGeneratedId: () => {},
-};
-
-type VibeContextType = {
-  isLoggedIn: boolean;
-  setLoggedIn: (value: boolean) => void;
-  generatedId: string | null;
-  setGeneratedId: (value: string) => void;
 };
 
 export const VibeContext = createContext<VibeContextType>(defaults);

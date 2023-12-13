@@ -1,5 +1,9 @@
 import { Buffer } from 'buffer';
 import { userProfile } from './profile';
+import {
+  SpotifyAccessTokenResponse,
+  SpotifyRefreshTokenResponse,
+} from '../../types';
 
 export const SPOTIFY_CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 export const SPOTIFY_CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
@@ -9,14 +13,6 @@ if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
 }
 
 let fetchingToken = false;
-
-type SpotifyAccessTokenResponse = {
-  access_token: string;
-  token_type: string;
-  scope: string;
-  expires_in: number;
-  refresh_token: string;
-};
 
 export async function generateAccessToken(): Promise<SpotifyAccessTokenResponse | null> {
   if (fetchingToken) {
@@ -69,13 +65,6 @@ export async function generateAccessToken(): Promise<SpotifyAccessTokenResponse 
   return data;
 }
 
-type SpotifyRefreshTokenResponse = {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  refresh_token: string;
-  scope: string;
-};
 export async function getRefreshToken(): Promise<void> {
   // refresh token that has been previously stored
   const refreshToken = localStorage.getItem('refresh_token');
