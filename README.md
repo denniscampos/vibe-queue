@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
+# Vibes Queue
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A way for your chat to add a song to the queue while streaming.
 
-Currently, two official plugins are available:
+## WIP
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [x] Spotify's Auth
+- [x] Ability to add tracks to the playlist
+- [ ] Hook up Twitch's API
+- [ ] Connect chat to add items to the Queue
+- [ ] Add unit testing.
 
-## Expanding the ESLint configuration
+## Set up the project locally
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Add the following to `.env.local` file
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+VITE_SPOTIFY_CLIENT_ID=
+VITE_SPOTIFY_CLIENT_SECRET=
+VITE_SPOTIFY_API_URL="https://api.spotify.com"
+VITE_BASE_URL="http://localhost:5173"
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Start the dev server
+`pnpm dev`
