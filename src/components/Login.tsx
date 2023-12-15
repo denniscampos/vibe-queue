@@ -1,5 +1,5 @@
 import { Button } from '@radix-ui/themes';
-import { generateRandomString } from '../utils';
+import { generateRandomString } from '@/utils';
 import { Link } from 'react-router-dom';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;

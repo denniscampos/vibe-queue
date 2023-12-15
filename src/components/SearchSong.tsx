@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { addTrackToQueue } from '../services/spotify/queue';
+import { addTrackToQueue } from '@/services/spotify/queue';
 import { TextField, Button, Text } from '@radix-ui/themes';
 
 export function SearchSong() {
