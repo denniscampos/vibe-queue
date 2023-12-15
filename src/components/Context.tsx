@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { createContext, useEffect, useState } from 'react';
-import { VibeContextType } from '../types';
+import { VibeContextType } from '@/types';
 
 const defaults: VibeContextType = {
   isLoggedIn: false,

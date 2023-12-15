@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { Login } from './components/Login';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { Source } from './components/Source';
-import { Settings } from './components/Settings';
-import { NoMatch } from './components/NoMatch';
+import { Login } from '@/components/Login';
+import { Layout } from '@/components/Layout';
+import { Home } from '@/components/Home';
+import { Source } from '@/components/Source';
+import { Settings } from '@/components/Settings';
+import { NoMatch } from '@/components/NoMatch';
 import { createContext } from 'react';
 
 export const GeneratedIdContext = createContext<string | null | object>(null);

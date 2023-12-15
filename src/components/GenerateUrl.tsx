@@ -2,7 +2,7 @@ import { Button, Text, TextField } from '@radix-ui/themes';
 
 import { CopyIcon } from '@radix-ui/react-icons';
 import toast, { Toaster } from 'react-hot-toast';
-import { useVibeContext } from '../hooks/useVibeContext';
+import { useVibeContext } from '@/hooks/useVibeContext';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
