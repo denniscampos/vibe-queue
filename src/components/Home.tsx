@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { generateAccessToken } from '@/services/spotify/token';
-import { SearchSong } from './SearchSong';
+// import { SearchSong } from './SearchSong';
 import { Flex, Heading } from '@radix-ui/themes';
 import { useSearchParams } from 'react-router-dom';
 import { Twitch } from './Twitch';
@@ -32,7 +32,8 @@ export function Home() {
   return (
     <Flex direction="column">
       <Heading as="h2">Home</Heading>
-      {accessToken !== null ? <SearchSong /> : null}
+
+      {accessToken !== null ? <Twitch /> : null}
       <Twitch />
     </Flex>
   );

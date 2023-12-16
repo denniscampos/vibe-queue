@@ -13,12 +13,14 @@ import { checkTokenValidity } from '../services/spotify/token';
 import toast from 'react-hot-toast';
 
 import { GenerateUrl } from './GenerateUrl';
+import { SpotifyPlaylistSetting } from './SpotifyPlaylistSetting';
+import { TwitchChannelSetting } from './TwitchChannelSetting';
 
 export function Settings() {
   const [isLoading, setIsLoading] = useState(false);
   const [showEye, setShowEye] = useState(false);
 
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = localStorage.getItem('access_token') || '';
 
   const handleShowEye = () => {
     setShowEye(!showEye);
@@ -44,7 +46,7 @@ export function Settings() {
           <Box mb="5">
             <Heading as="h2">Settings</Heading>
             <Text as="p" color="gray">
-              Manage your URL and token.
+              Adjust your settings here
             </Text>
           </Box>
 
@@ -82,6 +84,9 @@ export function Settings() {
           >
             {isLoading ? 'Loading..' : 'Refresh Token'}
           </Button>
+
+          <SpotifyPlaylistSetting />
+          <TwitchChannelSetting />
         </Flex>
       </Card>
     </Flex>
