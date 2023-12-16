@@ -34,7 +34,6 @@ export function Home() {
       <Heading as="h2">Home</Heading>
 
       {accessToken !== null ? <Twitch /> : null}
-      <Twitch />
     </Flex>
   );
 }
