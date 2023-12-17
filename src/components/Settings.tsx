@@ -13,8 +13,7 @@ import { checkTokenValidity } from '../services/spotify/token';
 import toast from 'react-hot-toast';
 
 import { GenerateUrl } from './GenerateUrl';
-import { SpotifyPlaylistSetting } from './SpotifyPlaylistSetting';
-import { TwitchChannelSetting } from './TwitchChannelSetting';
+import { SettingsForm } from './SettingsForm';
 
 export function Settings() {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,9 +48,7 @@ export function Settings() {
               Adjust your settings here
             </Text>
           </Box>
-
           <GenerateUrl />
-
           <Text htmlFor="currentToken" as="label" size="2" weight="bold">
             Current Token
           </Text>
@@ -78,6 +75,7 @@ export function Settings() {
             </TextField.Slot>
           </TextField.Root>
           <Button
+            mb="5"
             disabled={isLoading}
             type="button"
             onClick={handleRefreshToken}
@@ -85,8 +83,7 @@ export function Settings() {
             {isLoading ? 'Loading..' : 'Refresh Token'}
           </Button>
 
-          <SpotifyPlaylistSetting />
-          <TwitchChannelSetting />
+          <SettingsForm />
         </Flex>
       </Card>
     </Flex>

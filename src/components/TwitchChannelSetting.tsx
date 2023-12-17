@@ -1,17 +1,14 @@
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { Text, TextField, Button } from '@radix-ui/themes';
+import { Text, TextField } from '@radix-ui/themes';
 
-export function TwitchChannelSetting() {
-  const [twitchChannel, setTwitchChannel] = useState('');
+type TwitchChannelSettingProps = {
+  twitchChannel: string;
+  onSettingsChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-  const getTwitchChannel = localStorage.getItem('twitch_channel') || '';
-
-  const handleTwitchChannel = () => {
-    localStorage.setItem('twitch_channel', twitchChannel);
-    toast.success('twitch channel name saved');
-  };
-
+export function TwitchChannelSetting({
+  twitchChannel,
+  onSettingsChange,
+}: TwitchChannelSettingProps) {
   return (
     <>
       <Text htmlFor="twitchChannel" as="label" size="2" weight="bold">
@@ -19,13 +16,11 @@ export function TwitchChannelSetting() {
       </Text>
       <TextField.Input
         id="twitchChannel"
+        name="twitchChannel"
         placeholder="Twitch channel name.."
-        defaultValue={getTwitchChannel}
-        onChange={(e) => setTwitchChannel(e.target.value)}
+        defaultValue={twitchChannel}
+        onChange={onSettingsChange}
       />
-      <Button type="submit" onClick={handleTwitchChannel}>
-        Save
-      </Button>
     </>
   );
 }

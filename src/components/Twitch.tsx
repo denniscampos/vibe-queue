@@ -31,13 +31,13 @@ export function Twitch() {
 
       const args = message.slice(1).split(' ');
       const command = args?.shift()?.toLowerCase();
-      console.log({ args });
 
       if (command === 'queue') {
         const getSongName = async () => {
           setIsLoading(true);
-          // TODO: For now just the first word.. include the rest of the words.
-          const encodedSongName = encodeURIComponent(args[0]);
+
+          const songName = args.join(' ');
+          const encodedSongName = encodeURIComponent(songName);
           const url = new URL(
             `/v1/search?type=track&limit=1&q=${encodedSongName}`,
             import.meta.env.VITE_SPOTIFY_API_URL,
@@ -58,9 +58,9 @@ export function Twitch() {
             return;
           }
 
-          const song = data.tracks.items[0].uri;
+          const songUri = data.tracks.items[0].uri;
 
-          addTrackToQueue(song);
+          addTrackToQueue(songUri);
           setIsLoading(false);
         };
 

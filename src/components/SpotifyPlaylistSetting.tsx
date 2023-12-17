@@ -1,17 +1,14 @@
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { Text, TextField, Button } from '@radix-ui/themes';
+import { Text, TextField } from '@radix-ui/themes';
 
-export function SpotifyPlaylistSetting() {
-  const [playlistId, setPlaylistId] = useState('');
+type SpotifyPlaylistSettingProps = {
+  playlistId: string;
+  onSettingsChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-  const getPlaylistId = localStorage.getItem('playlist_id') || '';
-
-  const handlePlaylistId = () => {
-    localStorage.setItem('playlist_id', playlistId);
-    toast.success('Playlist ID saved');
-  };
-
+export function SpotifyPlaylistSetting({
+  playlistId,
+  onSettingsChange,
+}: SpotifyPlaylistSettingProps) {
   return (
     <>
       <Text htmlFor="playlistId" as="label" size="2" weight="bold">
@@ -19,13 +16,11 @@ export function SpotifyPlaylistSetting() {
       </Text>
       <TextField.Input
         id="playlistId"
+        name="playlistId"
         placeholder="Playlist ID.."
-        defaultValue={getPlaylistId}
-        onChange={(e) => setPlaylistId(e.target.value)}
+        defaultValue={playlistId}
+        onChange={onSettingsChange}
       />
-      <Button type="submit" onClick={handlePlaylistId}>
-        Save
-      </Button>
     </>
   );
 }
