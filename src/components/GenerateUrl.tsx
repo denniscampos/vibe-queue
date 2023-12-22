@@ -9,7 +9,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export function GenerateUrl() {
   const { generatedId } = useVibeContext();
 
-  const sourceUrl = `${BASE_URL}/source/?=${generatedId}`;
+  const sourceUrl = `${BASE_URL}/source?=${generatedId}`;
 
   const copyUserUrl = async () => {
     navigator.clipboard
