@@ -21,7 +21,15 @@ export function Login() {
   ];
   const state = generateRandomString(16);
 
-  const loginUrl = `${url}response_type=code&client_id=${spotifyClientId}&scope=${scopes}&redirect_uri=${redirect_uri}&state=${state}`;
+  const params = new URLSearchParams({
+    response_type: 'code',
+    client_id: spotifyClientId,
+    scope: scopes.join(' '),
+    redirect_uri,
+    state,
+  }).toString();
+
+  const loginUrl = `${url}${params}`;
 
   return (
     <div>

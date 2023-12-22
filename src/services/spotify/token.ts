@@ -27,10 +27,11 @@ export async function generateAccessToken(): Promise<SpotifyAccessTokenResponse 
   const grantType = 'authorization_code';
   const code = new URL(currentUrl).searchParams.get('code');
 
-  const params = new URLSearchParams();
-  params.append('code', String(code));
-  params.append('redirect_uri', redirectUrl);
-  params.append('grant_type', grantType);
+  const params = new URLSearchParams({
+    code: String(code),
+    redirect_uri: redirectUrl,
+    grant_type: grantType,
+  });
 
   const response = await fetch(url, {
     method: 'POST',
@@ -71,9 +72,10 @@ export async function getRefreshToken(): Promise<void> {
   const url = 'https://accounts.spotify.com/api/token';
   const grantType = 'refresh_token';
 
-  const params = new URLSearchParams();
-  params.append('grant_type', grantType);
-  params.append('refresh_token', refreshToken!);
+  const params = new URLSearchParams({
+    grant_type: grantType,
+    refresh_token: refreshToken!,
+  });
 
   const body = await fetch(url, {
     method: 'POST',
