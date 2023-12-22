@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Flex } from '@radix-ui/themes';
 import { Link as RadixLink } from '@radix-ui/themes';
 
 export function Navbar() {
+  const [searchParams] = useSearchParams();
   const accessToken = localStorage.getItem('access_token');
+  const code = searchParams.get('code');
 
   return (
     <Flex justify="between" asChild>
@@ -15,19 +17,22 @@ export function Navbar() {
         </RadixLink>
         <Flex gap="5" asChild>
           <nav>
-            {!accessToken ? (
+            {!code && !accessToken ? (
               <RadixLink asChild>
                 <Link to="/login">Login</Link>
               </RadixLink>
-            ) : null}
-            <RadixLink asChild>
-              <Link to="/source" reloadDocument>
-                Source
-              </Link>
-            </RadixLink>
-            <RadixLink asChild>
-              <Link to="/settings">Settings</Link>
-            </RadixLink>
+            ) : (
+              <>
+                <RadixLink asChild>
+                  <Link to="/source" reloadDocument>
+                    Source
+                  </Link>
+                </RadixLink>
+                <RadixLink asChild>
+                  <Link to="/settings">Settings</Link>
+                </RadixLink>
+              </>
+            )}
           </nav>
         </Flex>
       </header>
