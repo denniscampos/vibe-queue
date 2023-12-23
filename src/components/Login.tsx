@@ -38,9 +38,7 @@ export function Login() {
           Login
         </Link>
       </Button>
-      <Link to="/" reloadDocument>
-        Go home
-      </Link>
+      <Link to="/">Go home</Link>
     </div>
   );
 }

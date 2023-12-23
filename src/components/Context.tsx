@@ -4,7 +4,7 @@ import { VibeContextType } from '@/types';
 
 const defaults: VibeContextType = {
   isLoggedIn: false,
-  setLoggedIn: () => {},
+  setIsLoggedIn: () => {},
   generatedId: nanoid(),
   setGeneratedId: () => {},
 };
@@ -12,7 +12,7 @@ const defaults: VibeContextType = {
 export const VibeContext = createContext<VibeContextType>(defaults);
 
 const VibeContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isLoggedIn, setLoggedIn] = useState<boolean>(
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     localStorage.getItem('user_profile') ? true : false,
   );
 
@@ -34,7 +34,7 @@ const VibeContextProvider = ({ children }: { children: React.ReactNode }) => {
     <VibeContext.Provider
       value={{
         isLoggedIn,
-        setLoggedIn,
+        setIsLoggedIn,
         generatedId,
         setGeneratedId,
       }}

@@ -14,10 +14,12 @@ import toast from 'react-hot-toast';
 
 import { GenerateUrl } from './GenerateUrl';
 import { SettingsForm } from './SettingsForm';
+import { useVibeContext } from '@/hooks/useVibeContext';
 
 export function Settings() {
   const [isLoading, setIsLoading] = useState(false);
   const [showEye, setShowEye] = useState(false);
+  const { isLoggedIn } = useVibeContext();
 
   const accessToken = localStorage.getItem('access_token') || '';
 
@@ -37,6 +39,8 @@ export function Settings() {
 
     setIsLoading(false);
   };
+
+  if (!isLoggedIn) return null;
 
   return (
     <Flex justify="center" mt="9">

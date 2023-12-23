@@ -16,7 +16,7 @@ export type SpotifyRefreshTokenResponse = {
 
 export type VibeContextType = {
   isLoggedIn: boolean;
-  setLoggedIn: (value: boolean) => void;
+  setIsLoggedIn: (value: boolean) => void;
   generatedId: string | null;
   setGeneratedId: (value: string) => void;
 };

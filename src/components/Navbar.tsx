@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { Flex } from '@radix-ui/themes';
 import { Link as RadixLink } from '@radix-ui/themes';
+import { Logout } from './Logout';
 
 export function Navbar() {
   const [searchParams] = useSearchParams();
@@ -15,7 +16,7 @@ export function Navbar() {
             <span className="text-2xl font-bold">Vibe Queue</span>
           </Link>
         </RadixLink>
-        <Flex gap="5" asChild>
+        <Flex gap="5" align="center" asChild>
           <nav>
             {!code && !accessToken ? (
               <RadixLink asChild>
@@ -31,6 +32,8 @@ export function Navbar() {
                 <RadixLink asChild>
                   <Link to="/settings">Settings</Link>
                 </RadixLink>
+
+                <Logout />
               </>
             )}
           </nav>
