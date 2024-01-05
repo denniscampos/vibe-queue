@@ -1,9 +1,10 @@
 import { nanoid } from 'nanoid';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect } from 'react';
 import { VibeContextType } from '@/types';
+import { useLocalStorage } from '@/hooks/useLocaleStorage';
 
 const defaults: VibeContextType = {
-  isLoggedIn: false,
+  isLoggedIn: 'false',
   setIsLoggedIn: () => {},
   generatedId: nanoid(),
   setGeneratedId: () => {},
@@ -12,23 +13,16 @@ const defaults: VibeContextType = {
 export const VibeContext = createContext<VibeContextType>(defaults);
 
 const VibeContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-    localStorage.getItem('user_profile') ? true : false,
+  const [generatedId, setGeneratedId] = useLocalStorage(
+    'generated_id',
+    nanoid(),
   );
 
-  const [generatedId, setGeneratedId] = useState<string | null>(
-    localStorage.getItem('generated_id'),
-  );
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage('user_profile', 'false');
 
   useEffect(() => {
-    const generated_id = localStorage.getItem('generated_id');
-
-    if (!generated_id) {
-      localStorage.setItem('generated_id', nanoid());
-    }
-
-    setGeneratedId(String(generated_id));
-  }, []);
+    setGeneratedId(String(generatedId));
+  }, [setGeneratedId, generatedId]);
 
   return (
     <VibeContext.Provider

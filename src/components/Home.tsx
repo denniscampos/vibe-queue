@@ -16,7 +16,7 @@ export function Home() {
 
   useEffect(() => {
     if (code) {
-      setIsLoggedIn(true);
+      setIsLoggedIn('true');
     }
 
     const shouldFetchToken = code && !accessToken;
