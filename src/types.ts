@@ -20,3 +20,11 @@ export type VibeContextType = {
   generatedId: string | null;
   setGeneratedId: (value: string) => void;
 };
+
+export type TrackPayload = {
+  name: string;
+  artist: string;
+  albumCover: string;
+  progress_ms: number;
+  duration_ms: number;
+};

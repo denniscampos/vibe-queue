@@ -1,25 +1,28 @@
 import { addTrackToQueue } from '@/services/spotify/queue';
+import { currentlyPlaying } from '@/services/spotify/track';
+import { TrackPayload } from '@/types';
 import { useEffect, useState } from 'react';
 import tmi from 'tmi.js';
+
+const client = new tmi.Client({
+  options: { debug: true },
+  channels: ['dnbull'],
+});
+
+client.connect();
 
 export function Twitch() {
   const [songName] = useState('');
   const [, setIsLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [messages, setMessages] = useState<Array<string>>([]);
+  const [trackInformation, setTrackInformation] = useState<TrackPayload>();
 
   const twitchChannel = localStorage.getItem('twitch_channel') || '';
   const retrieveAccessToken = localStorage.getItem('access_token');
 
   useEffect(() => {
     if (!twitchChannel) return;
-
-    const client = new tmi.Client({
-      options: { debug: true },
-      channels: [twitchChannel],
-    });
-
-    client.connect();
 
     client.on('message', (_channel, tags, message, self) => {
       if (self) return;
@@ -60,7 +63,11 @@ export function Twitch() {
 
           const songUri = data.tracks.items[0].uri;
 
-          addTrackToQueue(songUri);
+          const res = await addTrackToQueue(songUri);
+          if (res.ok) {
+            console.log('added song to queue');
+          }
+
           setIsLoading(false);
         };
 
@@ -73,6 +80,46 @@ export function Twitch() {
     };
   }, [twitchChannel, retrieveAccessToken, messages, songName]);
 
+  useEffect(() => {
+    let ignore = false;
+    let checkInterval: number | undefined;
+
+    // This is a start but a few things to consider:
+    // This doesn't account for if a user pauses the song.
+    // What happens if I skip a song?
+    // This works when going from song A to B but if C happens, it's not accounted for.
+
+    const getCurrentTrack = async () => {
+      const data = await currentlyPlaying();
+      if (!ignore) {
+        setTrackInformation(data);
+      }
+    };
+
+    const scheduleNextCheck = (trackDuration: number, progress: number) => {
+      const timeLeft = trackDuration - progress;
+      clearTimeout(checkInterval);
+      checkInterval = setTimeout(() => {
+        getCurrentTrack();
+      }, timeLeft);
+    };
+
+    const initiateTrackCheck = async () => {
+      const data = await currentlyPlaying();
+      if (!ignore && data) {
+        setTrackInformation(data);
+        scheduleNextCheck(data.duration_ms, data.progress_ms);
+      }
+    };
+
+    initiateTrackCheck();
+
+    return () => {
+      ignore = true;
+      clearTimeout(checkInterval);
+    };
+  }, []);
+
   return (
     <div>
       <p>Twitch</p>
@@ -81,10 +128,7 @@ export function Twitch() {
           {username}: {message}
         </p>
       ))}
+      <pre>{JSON.stringify(trackInformation, null, 4)}</pre>
     </div>
   );
 }
-
-// user types in !queue song_name...
-// add the song to the playlist.
-// eventually use a bot or channel user to confirm the song was added to the playlist.
