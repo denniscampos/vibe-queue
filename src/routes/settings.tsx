@@ -12,8 +12,8 @@ import { useState } from 'react';
 import { checkTokenValidity } from '../services/spotify/token';
 import toast from 'react-hot-toast';
 
-import { GenerateUrl } from './GenerateUrl';
-import { SettingsForm } from './SettingsForm';
+import { GenerateUrl } from '../components/GenerateUrl';
+import { SettingsForm } from '../components/SettingsForm';
 import { useVibeContext } from '@/hooks/useVibeContext';
 
 export function Settings() {
